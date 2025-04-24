@@ -1,14 +1,53 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-brpip install django">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <title>Document</title>
+    <title>DocxForms</title>
 </head>
 <body>
-    <h1>It works!</h1>
+    <header>
+        <div class="logo">
+            <span style="font-size: 3rem; color: rgb(54, 54, 54);">DocxForms</span>
+        </div>
+        <span style="font-size: 1rem;">Automatize seus modelos .docx com simplicidade.</span>
+    </header>
+    <main class="flex-col">
+        <section class="section-new-doc">
+            <span style="width: 100%; font-weight: 500;">Inciar um novo documento</span>
+            <div class="upload">
+                <form method="post" enctype="multipart/form-data" id="docxForm">
+                    {% csrf_token %}
+                    <div class="btn-card flex-col" id="uploadBtn">
+                        <img src="{% static 'upload-svgrepo-com.svg' %}" alt="" width="35%" height="35%">
+                        <span style="padding: 0.5rem;">Carregar .docx</span>
+                    </div>
+                    <input type="file" name="docx_file" id="fileInput" accept=".docx" style="display: none;">
+                </form>
+            </div>
+            <div class="btn-card flex-col" id="text-info">
+                <span style="padding: 0.5rem; opacity: 0.9; text-align: center;">Adicione mais modelos</span>
+            </div>
+        </section>  
+        
+    </main>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileInputLabel = document.getElementById('fileInputLabel');
+        const uploadBtn = document.getElementById('uploadBtn');
+
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', () => {
+            document.forms['docxForm'].submit();
+            alert('Arquivo selecionado: '+fileInput.files[0].name);
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 import re
+import zipfile
 from django.shortcuts import render
 from docxtpl import DocxTemplate
 
@@ -21,13 +22,22 @@ def extrair_campos(docx):
     return campos
 
 def inicio(request):
-    
+
     if request.method == 'POST':
-        docx = DocxTemplate(request.FILES['docx_file'])
-        print("arquivo recebido")
-    
-        campos = extrair_campos(docx)
-        print(campos)
+        try:
+            docx = DocxTemplate(request.FILES['docx_file'])
+
+            if not request.FILES['docx_file'].name.endswith('.docx'):
+                return render(request, 'index.html', {'error': 'O arquivo enviado não é um DOCX válido'})
+
+            campos = extrair_campos(docx)
+            print(campos)
+
+        except KeyError:
+            return render(request, 'index.html', {'error': 'Arquivo DOCX não enviado'})
+        except Exception as e:
+            return render(request, 'index.html', {'error': 'Erro ao processar o arquivo'})
+            
 
     return render(request, 'index.html')
 

@@ -46,8 +46,14 @@
 
         fileInput.addEventListener('change', () => {
             document.forms['docxForm'].submit();
-            alert('Arquivo selecionado: '+fileInput.files[0].name);
         });
+
+        
+
+
     </script>
+    {% if error %}
+        <script>alert('{{ error }}');</script>
+    {% endif %}
 </body>
 </html>

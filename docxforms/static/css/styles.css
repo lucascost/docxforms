@@ -1,19 +1,70 @@
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  :root {
-      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      --primary-color: #333;
-      --background-color: #fff;
-  }
-  
-  html, body {
-      height: 100%;
-      font-family: var(--font-family);
-      background-color: var(--background-color);
-      color: var(--primary-color);
-      overflow: hidden;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --primary-color: #333;
+    --background-color: #fff;
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    
+}
+
+header{
+    width: 100%;
+    text-align: center;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main{
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.section-new-doc{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.btn-card{
+    width: 8rem;
+    height: 8rem;
+    border: 1px #b4b4b4 solid;
+    border-radius: 1rem; 
+    transition: transform 0.1s ease, background-color 0.11s;
+}
+
+
+.btn-card:active {
+    transform: scale(0.99); /* efeito de "apertado" */
+    background-color: #e4e4e4; /* muda a cor no clique */
+}
+
+.btn-card:hover{
+    cursor: pointer;
+}
+
+.btn-card img{
+    opacity: 0.8;
+    flex-grow: 1;
+    object-fit: contain;
+    object-position: bottom;
+    padding-bottom: 0.5rem;
+}

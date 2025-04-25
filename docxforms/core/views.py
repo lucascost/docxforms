@@ -26,8 +26,9 @@ def serializar_arquivo(arquivo):
     bytes = arquivo.read()
     return base64.b64encode(bytes).decode('utf-8')
 
-def guardar_em_memoria(request, key, value):
-    request.session[key] = value
+def guardar_em_memoria(request, dados):
+    for key, value in dados.items():
+        request.session[key] = value
 
 
 def inicio(request):
@@ -42,8 +43,12 @@ def inicio(request):
             campos = extrair_campos(docx)
             
             docx_bytes = serializar_arquivo(file)
-            guardar_em_memoria(request, 'docx_bytes', docx_bytes)
-            guardar_em_memoria(request, 'campos', campos)
+
+            guardar_em_memoria(request,{
+                'docx_bytes':docx_bytes,
+                'campos': campos,
+                'nome_arquivo':file.name
+                })
 
             return redirect('edit/')
 
@@ -57,5 +62,7 @@ def inicio(request):
 def editar_docx(request):
     campos_recebidos = request.session.get('campos',[])
     campos_formatados = [s.replace("_", " ") for s in campos_recebidos]
-    
-    return render(request, 'edit.html', {'campos':campos_formatados})
+
+    nome_arquivo = request.session.get('nome_arquivo','')
+
+    return render(request, 'edit.html', {'campos':campos_formatados, 'nome_arquivo': nome_arquivo})

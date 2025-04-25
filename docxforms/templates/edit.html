@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <title>DocxForms</title>
+</head>
+<body>
+    <div class="top-bar">
+        <a href="{% url 'core:inicio' %}" style="text-decoration: none;">
+            <span style="font-size: 1.5rem; font-weight: 500; color: rgb(54, 54, 54);">DocxForms</span>
+        </a>
+    </div>
+    <main>
+        <aside>
+            <span style="font-weight: 500; display: inline-block;">{{ nome_arquivo }}</span>
+            <form action="POST" style="margin-top: 2rem;">
+                {% for campo in campos %}
+                <div class="form-field">
+                    <label style="font-weight: 500;" >{{ campo|title }}</label>
+                    <input type="text" name="{{campo}}" id="">
+                </div>
+                {% endfor %}
+                
+                <div class="actions">
+                    <div>
+                        <div class="action-title">
+                            <div style="width: fit-content; font-weight: 500;">Edição</div>
+                            <div class="line"></div>
+                        </div>
+                        <button type="button">Preencher</button>
+                        <button type="button" disabled>Adicionar página</button>
+                        
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <div>
+                        <div class="action-title">
+                            <div style="width: fit-content; font-weight: 500;">Obter arquivo</div>
+                            <div class="line"></div>
+                        </div>
+                        <button type="button" disabled>Baixar</button>
+                        <button type="button" disabled>Imprimir</button>
+                        
+                    </div>
+                </div>
+            </form>
+        </aside>
+    </main>
+</body>
+</html>

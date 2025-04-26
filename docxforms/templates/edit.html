@@ -17,7 +17,8 @@
     <main>
         <aside>
             <span style="font-weight: 500; display: inline-block;">{{ nome_arquivo }}</span>
-            <form action="POST" style="margin-top: 2rem;">
+            <form id="camposForm" method="POST" style="margin-top: 2rem;">
+                {% csrf_token %}
                 {% for campo in campos %}
                 <div class="form-field">
                     <label style="font-weight: 500;" >{{ campo|title }}</label>
@@ -31,7 +32,7 @@
                             <div style="width: fit-content; font-weight: 500;">Edição</div>
                             <div class="line"></div>
                         </div>
-                        <button type="button">Preencher</button>
+                        <button type="button" id="submitBtn">Preencher</button>
                         <button type="button" disabled>Adicionar página</button>
                         
                     </div>
@@ -51,5 +52,11 @@
             </form>
         </aside>
     </main>
+    <script>
+        const submitBtn = document.getElementById('submitBtn')
+        submitBtn.addEventListener('click', () => {
+            document.forms['camposForm'].submit();
+        });
+    </script>
 </body>
 </html>

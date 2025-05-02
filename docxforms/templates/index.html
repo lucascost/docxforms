@@ -25,7 +25,8 @@
                         <img src="{% static 'upload-svgrepo-com.svg' %}" alt="" width="35%" height="35%">
                         <span style="padding: 0.5rem;">Carregar .docx</span>
                     </div>
-                    <input type="file" name="docx_file" id="fileInput" accept=".docx" style="display: none;">
+                    {{form}}
+                    <!--<input type="file" name="docx_file" id="fileInput" accept=".docx" style="display: none;">-->
                 </form>
             </div>
             <div class="btn-card flex-col" id="text-info" style="justify-content: center !important;">
@@ -36,7 +37,7 @@
     </main>
 
     <script>
-        const fileInput = document.getElementById('fileInput');
+        const fileInput = document.getElementById('id_arquivo');
         const fileInputLabel = document.getElementById('fileInputLabel');
         const uploadBtn = document.getElementById('uploadBtn');
 

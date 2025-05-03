@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="pt-brpip install django">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,11 +29,16 @@
                     <!--<input type="file" name="docx_file" id="fileInput" accept=".docx" style="display: none;">-->
                 </form>
             </div>
-            <div class="btn-card flex-col" id="text-info" style="justify-content: center !important;">
+            <!--<div class="btn-card flex-col" id="text-info" style="justify-content: center !important;">
+                <a href="#">{{doc.arquivo.name}}</a>
                 <span style="padding: 0.5rem; opacity: 0.9; text-align: center;">Adicione mais modelos</span>
-            </div>
+            </div>-->
+            
         </section>  
-        
+        {% for doc in docs %}
+        <a href="/edit/?key={{ doc.id }}">{{ doc.arquivo.name }}</a>
+
+        {% endfor %}   
     </main>
 
     <script>

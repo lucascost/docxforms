@@ -69,33 +69,28 @@ def inicio(request):
             print(str(e))
             return render(request, 'index.html', {'error': 'Erro ao processar o arquivo'})
 
-    return render(request, 'index.html', {'form':DocumentoForm()})
+    docs = Documento.objects.all()
+
+    return render(request, 'index.html', {'form':DocumentoForm(), 'docs':docs})
 
 def editar_docx(request):
-    #campos_recebidos = request.session.get('campos',[])
-    #campos_formatados = [s.replace("_", " ") for s in campos_recebidos]
-    #nome_arquivo = request.session.get('nome_arquivo','')
-    #docx_path = request.session.get('docx_path')
-    
     doc_id= request.GET.get('key')
     documento = Documento.objects.get(id=doc_id)
+    nome_arquivo = documento.arquivo.name 
 
     with documento.arquivo.open('rb') as f:
         file_bytes = io.BytesIO(f.read())
         docx = DocxTemplate(file_bytes)
         campos = extrair_campos(docx)
-
-        print(campos)
+        campos_formatados = [s.replace("_", " ") for s in campos]
+        print(campos_formatados)
     
-    if request.method == 'POST':
-        path = os.path.join(settings.MEDIA_ROOT, 'temp', nome_arquivo)
-        print(path)
-        with open(path,'rb') as f:
-            doc = DocxTemplate(f)
-            doc.render({"nome":"lucas"})
-            #output = BytesIO()
-            #doc.save(output)
-            #output.seek(0)
-            #return FileResponse(output, as_attachment=True, filename="documento_editado.docx")
+        if request.method == 'POST':
+            ndoc = DocxTemplate(f)
+            ndoc.render({"nome":"lucas"})
+            output = BytesIO()
+            ndoc.save(output)
+            output.seek(0)
+            return FileResponse(output, as_attachment=True, filename="documento_editado.docx")
 
-    return render(request, 'edit.html', {'campos':campos, 'nome_arquivo': 'nome_arquivo'})
+    return render(request, 'edit.html', {'campos':campos_formatados, 'nome_arquivo': nome_arquivo.replace('docs/','')})

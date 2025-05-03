@@ -86,11 +86,15 @@ def editar_docx(request):
         print(campos_formatados)
     
         if request.method == 'POST':
+            dados = []
+            for campo in campos:
+                dados.append((campo,str(request.POST[campo])),)
+            context = dict(dados)
             ndoc = DocxTemplate(f)
-            ndoc.render({"nome":"lucas"})
+            ndoc.render(context)
             output = BytesIO()
             ndoc.save(output)
             output.seek(0)
             return FileResponse(output, as_attachment=True, filename="documento_editado.docx")
 
-    return render(request, 'edit.html', {'campos':campos_formatados, 'nome_arquivo': nome_arquivo.replace('docs/','')})
+    return render(request, 'edit.html', {'campos':campos, 'nome_arquivo': nome_arquivo.replace('docs/','')})
